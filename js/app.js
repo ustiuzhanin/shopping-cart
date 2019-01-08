@@ -2,8 +2,11 @@
 
 const courses = document.querySelector('#courses-list');
 const shoppingCartContent = document.querySelector('#cart-content tbody');
+const clearCartBtn = document.querySelector('#clear-cart');
 
 courses.addEventListener('click', onCoursesClick);
+shoppingCartContent.addEventListener('click', onRemoveClick);
+clearCartBtn.addEventListener('click', onClearCartBtnClick);
 
 function onCoursesClick (evt) {
     evt.preventDefault();
@@ -29,8 +32,7 @@ function getCourseInfo (course) {
 }
 
 function addCourseToCart (course) {
-    const cartRow = document.querySelector('#cart-content tr');
-
+    const cartRow = document.createElement('tr');
     cartRow.innerHTML = `
         <tr>
             <td>
@@ -43,6 +45,21 @@ function addCourseToCart (course) {
             </td>
         </tr>
     `;
+    console.log(cartRow);
 
     shoppingCartContent.appendChild(cartRow);
+    console.log(shoppingCartContent);
+    
+}
+
+function onRemoveClick (evt) {
+    if(evt.target.classList.contains('remove')) {
+        evt.target.parentElement.parentElement.remove();
+    }
+}
+
+function onClearCartBtnClick () {
+    Array.from(shoppingCartContent.children).forEach(function (item) {
+        shoppingCartContent.removeChild(item);
+    })
 }
